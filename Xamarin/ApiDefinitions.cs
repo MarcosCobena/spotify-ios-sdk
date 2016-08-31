@@ -345,15 +345,6 @@ namespace Spotify
 	// typedef void (^SPTRequestDataCallback)(NSError *, NSURLResponse *, NSData *);
 	delegate void SPTRequestDataCallback (NSError arg0, NSUrlResponse arg1, NSData arg2);
 
-	[Static]
-	[Verify (ConstantsInterfaceAssociation)]
-	partial interface Constants
-	{
-		// extern NSString *const SPTMarketFromToken;
-		[Field ("SPTMarketFromToken", "__Internal")]
-		NSString SPTMarketFromToken { get; }
-	}
-
 	// @protocol SPTRequestHandlerProtocol
 	[Protocol, Model]
 	interface SPTRequestHandlerProtocol
@@ -368,6 +359,10 @@ namespace Spotify
 	[BaseType (typeof(NSObject))]
 	interface SPTRequest
 	{
+		// extern NSString *const SPTMarketFromToken;
+		[Field ("SPTMarketFromToken", "__Internal")]
+		NSString MarketFromToken { get; }
+
 		// +(id<SPTRequestHandlerProtocol>)sharedHandler;
 		// +(void)setSharedHandler:(id<SPTRequestHandlerProtocol>)handler;
 		[Static]
@@ -816,23 +811,18 @@ namespace Spotify
 		SPTPartialTrack PartialTrackFromDecodedJSON (NSObject decodedObject, out NSError error);
 	}
 
-	[Static]
-	[Verify (ConstantsInterfaceAssociation)]
-	partial interface Constants
-	{
-		// extern NSString *const SPTPlaylistSnapshotPublicKey;
-		[Field ("SPTPlaylistSnapshotPublicKey", "__Internal")]
-		NSString SPTPlaylistSnapshotPublicKey { get; }
-
-		// extern NSString *const SPTPlaylistSnapshotNameKey;
-		[Field ("SPTPlaylistSnapshotNameKey", "__Internal")]
-		NSString SPTPlaylistSnapshotNameKey { get; }
-	}
-
 	// @interface SPTPlaylistSnapshot : SPTPartialPlaylist <SPTJSONObject>
 	[BaseType (typeof(SPTPartialPlaylist))]
 	interface SPTPlaylistSnapshot : ISPTJSONObject
 	{
+		// extern NSString *const SPTPlaylistSnapshotPublicKey;
+		[Field ("SPTPlaylistSnapshotPublicKey", "__Internal")]
+		NSString PublicKey { get; }
+
+		// extern NSString *const SPTPlaylistSnapshotNameKey;
+		[Field ("SPTPlaylistSnapshotNameKey", "__Internal")]
+		NSString NameKey { get; }
+
 		// @property (readonly, nonatomic) SPTListPage * firstTrackPage;
 		[Export ("firstTrackPage")]
 		SPTListPage FirstTrackPage { get; }
@@ -1565,15 +1555,6 @@ namespace Spotify
 		nuint BackgroundPlaybackTask { get; set; }
 	}
 
-	[Static]
-	[Verify (ConstantsInterfaceAssociation)]
-	partial interface Constants
-	{
-		// extern const NSUInteger SPTDiskCacheBlockSize;
-		[Field ("SPTDiskCacheBlockSize", "__Internal")]
-		nuint SPTDiskCacheBlockSize { get; }
-	}
-
 	// @protocol SPTCacheData <NSObject>
 	[Protocol, Model]
 	[BaseType (typeof(NSObject))]
@@ -1622,6 +1603,10 @@ namespace Spotify
 	[BaseType (typeof(NSObject))]
 	interface SPTDiskCache : ISPTDiskCaching
 	{
+		// extern const NSUInteger SPTDiskCacheBlockSize;
+		[Field ("SPTDiskCacheBlockSize", "__Internal")]
+		nuint BlockSize { get; }
+
 		// -(instancetype)initWithCapacity:(NSUInteger)capacity;
 		[Export ("initWithCapacity:")]
 		IntPtr Constructor (nuint capacity);
@@ -1956,79 +1941,78 @@ namespace Spotify
 	}
 
 	[Static]
-	[Verify (ConstantsInterfaceAssociation)]
-	partial interface Constants
+	partial interface ErrorCodes
 	{
 		// extern const NSInteger SPTErrorCodeNoError;
 		[Field ("SPTErrorCodeNoError", "__Internal")]
-		nint SPTErrorCodeNoError { get; }
+		nint NoError { get; }
 
 		// extern const NSInteger SPTErrorCodeFailed;
 		[Field ("SPTErrorCodeFailed", "__Internal")]
-		nint SPTErrorCodeFailed { get; }
+		nint Failed { get; }
 
 		// extern const NSInteger SPTErrorCodeInitFailed;
 		[Field ("SPTErrorCodeInitFailed", "__Internal")]
-		nint SPTErrorCodeInitFailed { get; }
+		nint InitFailed { get; }
 
 		// extern const NSInteger SPTErrorCodeWrongAPIVersion;
 		[Field ("SPTErrorCodeWrongAPIVersion", "__Internal")]
-		nint SPTErrorCodeWrongAPIVersion { get; }
+		nint WrongAPIVersion { get; }
 
 		// extern const NSInteger SPTErrorCodeNullArgument;
 		[Field ("SPTErrorCodeNullArgument", "__Internal")]
-		nint SPTErrorCodeNullArgument { get; }
+		nint NullArgument { get; }
 
 		// extern const NSInteger SPTErrorCodeInvalidArgument;
 		[Field ("SPTErrorCodeInvalidArgument", "__Internal")]
-		nint SPTErrorCodeInvalidArgument { get; }
+		nint InvalidArgument { get; }
 
 		// extern const NSInteger SPTErrorCodeUninitialized;
 		[Field ("SPTErrorCodeUninitialized", "__Internal")]
-		nint SPTErrorCodeUninitialized { get; }
+		nint Uninitialized { get; }
 
 		// extern const NSInteger SPTErrorCodeAlreadyInitialized;
 		[Field ("SPTErrorCodeAlreadyInitialized", "__Internal")]
-		nint SPTErrorCodeAlreadyInitialized { get; }
+		nint AlreadyInitialized { get; }
 
 		// extern const NSInteger SPTErrorCodeBadCredentials;
 		[Field ("SPTErrorCodeBadCredentials", "__Internal")]
-		nint SPTErrorCodeBadCredentials { get; }
+		nint BadCredentials { get; }
 
 		// extern const NSInteger SPTErrorCodeNeedsPremium;
 		[Field ("SPTErrorCodeNeedsPremium", "__Internal")]
-		nint SPTErrorCodeNeedsPremium { get; }
+		nint NeedsPremium { get; }
 
 		// extern const NSInteger SPTErrorCodeTravelRestriction;
 		[Field ("SPTErrorCodeTravelRestriction", "__Internal")]
-		nint SPTErrorCodeTravelRestriction { get; }
+		nint TravelRestriction { get; }
 
 		// extern const NSInteger SPTErrorCodeApplicationBanned;
 		[Field ("SPTErrorCodeApplicationBanned", "__Internal")]
-		nint SPTErrorCodeApplicationBanned { get; }
+		nint ApplicationBanned { get; }
 
 		// extern const NSInteger SPTErrorCodeGeneralLoginError;
 		[Field ("SPTErrorCodeGeneralLoginError", "__Internal")]
-		nint SPTErrorCodeGeneralLoginError { get; }
+		nint GeneralLoginError { get; }
 
 		// extern const NSInteger SPTErrorCodeUnsupported;
 		[Field ("SPTErrorCodeUnsupported", "__Internal")]
-		nint SPTErrorCodeUnsupported { get; }
+		nint Unsupported { get; }
 
 		// extern const NSInteger SPTErrorCodeNotActiveDevice;
 		[Field ("SPTErrorCodeNotActiveDevice", "__Internal")]
-		nint SPTErrorCodeNotActiveDevice { get; }
+		nint NotActiveDevice { get; }
 
 		// extern const NSInteger SPTErrorCodeGeneralPlaybackError;
 		[Field ("SPTErrorCodeGeneralPlaybackError", "__Internal")]
-		nint SPTErrorCodeGeneralPlaybackError { get; }
+		nint GeneralPlaybackError { get; }
 
 		// extern const NSInteger SPTErrorCodePlaybackRateLimited;
 		[Field ("SPTErrorCodePlaybackRateLimited", "__Internal")]
-		nint SPTErrorCodePlaybackRateLimited { get; }
+		nint PlaybackRateLimited { get; }
 
 		// extern const NSInteger SPTErrorCodeTrackUnavailable;
 		[Field ("SPTErrorCodeTrackUnavailable", "__Internal")]
-		nint SPTErrorCodeTrackUnavailable { get; }
+		nint TrackUnavailable { get; }
 	}
 }
