@@ -7,7 +7,7 @@ using Spotify;
 namespace Spotify
 {
 	[Native]
-	public enum SPTSearchQueryType : ulong
+	public enum SearchQueryType : ulong
 	{
 		Track = 0,
 		Artist,
@@ -16,7 +16,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SPTAlbumType : ulong
+	public enum AlbumType : ulong
 	{
 		Album,
 		Single,
@@ -25,7 +25,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SPTProduct : ulong
+	public enum Product : ulong
 	{
 		Free,
 		Unlimited,
@@ -34,7 +34,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SpPlaybackEvent : ulong
+	public enum PlaybackEvent : ulong
 	{
 		NotifyPlay,
 		NotifyPause,
@@ -55,53 +55,60 @@ namespace Spotify
 		NotifyMetadataChanged
 	}
 
-	[Native]
-	public enum SpErrorCode : ulong
+	public static class PlaybackEventExtensions
 	{
-		ErrorOk = 0,
-		ErrorFailed,
-		ErrorInitFailed,
-		ErrorWrongAPIVersion,
-		ErrorNullArgument,
-		ErrorInvalidArgument,
-		ErrorUninitialized,
-		ErrorAlreadyInitialized,
-		ErrorLoginBadCredentials,
-		ErrorNeedsPremium,
-		ErrorTravelRestriction,
-		ErrorApplicationBanned,
-		ErrorGeneralLoginError,
-		ErrorUnsupported,
-		ErrorNotActiveDevice,
-		ErrorAPIRateLimited,
-		ErrorPlaybackErrorStart = 1000,
-		ErrorGeneralPlaybackError,
-		ErrorPlaybackRateLimited,
-		ErrorPlaybackCappingLimitReached,
-		ErrorAdIsPlaying,
-		ErrorCorruptTrack,
-		ErrorContextFailed,
-		ErrorPrefetchItemUnavailable,
+		// extern NSString * symbolise (SpPlaybackEvent event);
+		[DllImport ("__Internal")]
+		static extern IntPtr symbolise (UIntPtr playbackEvent);
+
+		public static string Symbolize (this PlaybackEvent playbackEvent)
+			=> NSString.FromHandle (symbolise (new UIntPtr ((ulong)playbackEvent)));
+	}
+
+	[Native]
+	public enum ErrorCode : ulong
+	{
+		Ok = 0,
+		Failed,
+		InitFailed,
+		WrongAPIVersion,
+		NullArgument,
+		InvalidArgument,
+		Uninitialized,
+		AlreadyInitialized,
+		LoginBadCredentials,
+		NeedsPremium,
+		TravelRestriction,
+		ApplicationBanned,
+		GeneralLoginError,
+		Unsupported,
+		NotActiveDevice,
+		APIRateLimited,
+		/* PlaybackErrorStart = 1000, */
+		GeneralPlaybackError = 1001,
+		PlaybackRateLimited,
+		PlaybackCappingLimitReached,
+		AdIsPlaying,
+		CorruptTrack,
+		ContextFailed,
+		PrefetchItemUnavailable,
 		AlreadyPrefetching,
 		StorageWriteError,
 		PrefetchDownloadFailed
 	}
 
-	static class CFunctions
+	public static class ErrorCodeExtensions
 	{
-		// extern NSString * symbolise (SpPlaybackEvent event);
-		[DllImport ("__Internal")]
-		[Verify (PlatformInvoke)]
-		static extern NSString symbolise (SpPlaybackEvent @event);
-
 		// extern NSString * symboliseError (SpErrorCode event);
 		[DllImport ("__Internal")]
-		[Verify (PlatformInvoke)]
-		static extern NSString symboliseError (SpErrorCode @event);
+		static extern IntPtr symboliseError (UIntPtr @errorCode);
+
+		public static string Symbolize (this ErrorCode errorCode)
+			=> NSString.FromHandle (symboliseError (new UIntPtr ((ulong)errorCode)));
 	}
 
 	[Native]
-	public enum SPTBitrate : ulong
+	public enum Bitrate : ulong
 	{
 		Low = 0,
 		Normal = 1,

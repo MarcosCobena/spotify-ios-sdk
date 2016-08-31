@@ -433,7 +433,7 @@ namespace Spotify
 
 		// @property (readonly, nonatomic) SPTAlbumType type;
 		[Export ("type")]
-		SPTAlbumType Type { get; }
+		AlbumType Type { get; }
 
 		// @property (readonly, copy, nonatomic) NSArray * availableTerritories;
 		[Export ("availableTerritories", ArgumentSemantic.Copy)]
@@ -590,7 +590,7 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForAlbumsByArtist:(NSURL *)artist ofType:(SPTAlbumType)type withAccessToken:(NSString *)accessToken market:(NSString *)market error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForAlbumsByArtist:ofType:withAccessToken:market:error:")]
-		NSUrlRequest CreateRequestForAlbumsByArtist (NSUrl artist, SPTAlbumType type, string accessToken, string market, out NSError error);
+		NSUrlRequest CreateRequestForAlbumsByArtist (NSUrl artist, AlbumType type, string accessToken, string market, out NSError error);
 
 		// +(NSURLRequest *)createRequestForTopTracksForArtist:(NSURL *)artist withAccessToken:(NSString *)accessToken market:(NSString *)market error:(NSError **)error;
 		[Static]
@@ -644,11 +644,11 @@ namespace Spotify
 
 		// -(void)requestAlbumsOfType:(SPTAlbumType)type withSession:(SPTSession *)session availableInTerritory:(NSString *)territory callback:(SPTRequestCallback)block;
 		[Export ("requestAlbumsOfType:withSession:availableInTerritory:callback:")]
-		void RequestAlbumsOfType (SPTAlbumType type, SPTSession session, string territory, SPTRequestCallback block);
+		void RequestAlbumsOfType (AlbumType type, SPTSession session, string territory, SPTRequestCallback block);
 
 		// -(void)requestAlbumsOfType:(SPTAlbumType)type withAccessToken:(NSString *)accessToken availableInTerritory:(NSString *)territory callback:(SPTRequestCallback)block;
 		[Export ("requestAlbumsOfType:withAccessToken:availableInTerritory:callback:")]
-		void RequestAlbumsOfType (SPTAlbumType type, string accessToken, string territory, SPTRequestCallback block);
+		void RequestAlbumsOfType (AlbumType type, string accessToken, string territory, SPTRequestCallback block);
 
 		// -(void)requestTopTracksForTerritory:(NSString *)territory withSession:(SPTSession *)session callback:(SPTRequestCallback)block;
 		[Export ("requestTopTracksForTerritory:withSession:callback:")]
@@ -1232,7 +1232,7 @@ namespace Spotify
 
 		// @property (readonly, nonatomic) SPTProduct product;
 		[Export ("product")]
-		SPTProduct Product { get; }
+		Product Product { get; }
 
 		// @property (readonly, nonatomic) long followerCount;
 		[Export ("followerCount")]
@@ -1420,52 +1420,52 @@ namespace Spotify
 		// +(void)performSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType offset:(NSInteger)offset accessToken:(NSString *)accessToken market:(NSString *)market callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("performSearchWithQuery:queryType:offset:accessToken:market:callback:")]
-		void PerformSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, nint offset, string accessToken, string market, SPTRequestCallback block);
+		void PerformSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, nint offset, string accessToken, string market, SPTRequestCallback block);
 
 		// +(NSURLRequest *)createRequestForSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType offset:(NSInteger)offset accessToken:(NSString *)accessToken market:(NSString *)market error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForSearchWithQuery:queryType:offset:accessToken:market:error:")]
-		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, nint offset, string accessToken, string market, out NSError error);
+		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, nint offset, string accessToken, string market, out NSError error);
 
 		// +(void)performSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType accessToken:(NSString *)accessToken market:(NSString *)market callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("performSearchWithQuery:queryType:accessToken:market:callback:")]
-		void PerformSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, string accessToken, string market, SPTRequestCallback block);
+		void PerformSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, string accessToken, string market, SPTRequestCallback block);
 
 		// +(NSURLRequest *)createRequestForSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType accessToken:(NSString *)accessToken market:(NSString *)market error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForSearchWithQuery:queryType:accessToken:market:error:")]
-		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, string accessToken, string market, out NSError error);
+		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, string accessToken, string market, out NSError error);
 
 		// +(void)performSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType offset:(NSInteger)offset accessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("performSearchWithQuery:queryType:offset:accessToken:callback:")]
-		void PerformSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, nint offset, string accessToken, SPTRequestCallback block);
+		void PerformSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, nint offset, string accessToken, SPTRequestCallback block);
 
 		// +(NSURLRequest *)createRequestForSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType offset:(NSInteger)offset accessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForSearchWithQuery:queryType:offset:accessToken:error:")]
-		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, nint offset, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, nint offset, string accessToken, out NSError error);
 
 		// +(void)performSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType accessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("performSearchWithQuery:queryType:accessToken:callback:")]
-		void PerformSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, string accessToken, SPTRequestCallback block);
+		void PerformSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, string accessToken, SPTRequestCallback block);
 
 		// +(NSURLRequest *)createRequestForSearchWithQuery:(NSString *)searchQuery queryType:(SPTSearchQueryType)searchQueryType accessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForSearchWithQuery:queryType:accessToken:error:")]
-		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SPTSearchQueryType searchQueryType, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForSearchWithQuery (string searchQuery, SearchQueryType searchQueryType, string accessToken, out NSError error);
 
 		// +(SPTListPage *)searchResultsFromData:(NSData *)data withResponse:(NSURLResponse *)response queryType:(SPTSearchQueryType)searchQueryType error:(NSError **)error;
 		[Static]
 		[Export ("searchResultsFromData:withResponse:queryType:error:")]
-		SPTListPage SearchResultsFromData (NSData data, NSUrlResponse response, SPTSearchQueryType searchQueryType, out NSError error);
+		SPTListPage SearchResultsFromData (NSData data, NSUrlResponse response, SearchQueryType searchQueryType, out NSError error);
 
 		// +(SPTListPage *)searchResultsFromDecodedJSON:(id)decodedObject queryType:(SPTSearchQueryType)searchQueryType error:(NSError **)error;
 		[Static]
 		[Export ("searchResultsFromDecodedJSON:queryType:error:")]
-		SPTListPage SearchResultsFromDecodedJSON (NSObject decodedObject, SPTSearchQueryType searchQueryType, out NSError error);
+		SPTListPage SearchResultsFromDecodedJSON (NSObject decodedObject, SearchQueryType searchQueryType, out NSError error);
 	}
 
 	// @interface SPTCircularBuffer : NSObject
@@ -1793,7 +1793,7 @@ namespace Spotify
 
 		// -(void)setTargetBitrate:(SPTBitrate)bitrate callback:(SPTErrorableOperationCallback)block;
 		[Export ("setTargetBitrate:callback:")]
-		void SetTargetBitrate (SPTBitrate bitrate, SPTErrorableOperationCallback block);
+		void SetTargetBitrate (Bitrate bitrate, SPTErrorableOperationCallback block);
 
 		// -(void)seekTo:(NSTimeInterval)position callback:(SPTErrorableOperationCallback)block;
 		[Export ("seekTo:callback:")]
@@ -1833,7 +1833,7 @@ namespace Spotify
 
 		// @property (readonly, atomic) SPTBitrate targetBitrate;
 		[Export ("targetBitrate")]
-		SPTBitrate TargetBitrate { get; }
+		Bitrate TargetBitrate { get; }
 	}
 
 	// @protocol SPTAudioStreamingDelegate <NSObject>
@@ -1843,7 +1843,7 @@ namespace Spotify
 	{
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didReceiveError:(SpErrorCode)errorCode withName:(NSString *)name;
 		[Export ("audioStreaming:didReceiveError:withName:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, SpErrorCode errorCode, string name);
+		void AudioStreaming (SPTAudioStreamingController audioStreaming, ErrorCode errorCode, string name);
 
 		// @optional -(void)audioStreamingDidLogin:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidLogin:")]
