@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify", "Spotify.csproj", "{DA152BCF-9FB9-485E-8B33-1C6E6A386984}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA152BCF-9FB9-485E-8B33-1C6E6A386984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA152BCF-9FB9-485E-8B33-1C6E6A386984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA152BCF-9FB9-485E-8B33-1C6E6A386984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA152BCF-9FB9-485E-8B33-1C6E6A386984}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
