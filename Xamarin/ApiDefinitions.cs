@@ -26,7 +26,6 @@ namespace Spotify
 		// @required -(NSURL *)playableUri;
 		[Abstract]
 		[Export ("playableUri")]
-		[Verify (MethodToProperty)]
 		NSUrl PlayableUri { get; }
 	}
 
@@ -92,7 +91,6 @@ namespace Spotify
 		// +(SPTAuth *)defaultInstance;
 		[Static]
 		[Export ("defaultInstance")]
-		[Verify (MethodToProperty)]
 		SPTAuth DefaultInstance { get; }
 
 		// @property (readwrite, strong) NSString * clientID;
@@ -157,13 +155,11 @@ namespace Spotify
 		// +(BOOL)supportsApplicationAuthentication;
 		[Static]
 		[Export ("supportsApplicationAuthentication")]
-		[Verify (MethodToProperty)]
 		bool SupportsApplicationAuthentication { get; }
 
 		// +(BOOL)spotifyApplicationIsInstalled;
 		[Static]
 		[Export ("spotifyApplicationIsInstalled")]
-		[Verify (MethodToProperty)]
 		bool SpotifyApplicationIsInstalled { get; }
 
 		// -(void)renewSession:(SPTSession *)session callback:(SPTAuthCallback)block;
@@ -192,7 +188,6 @@ namespace Spotify
 
 		// -(BOOL)isValid;
 		[Export ("isValid")]
-		[Verify (MethodToProperty)]
 		bool IsValid { get; }
 
 		// @property (readonly, copy, nonatomic) NSString * canonicalUsername;
@@ -260,7 +255,6 @@ namespace Spotify
 		// +(SPTAuthViewController *)authenticationViewController;
 		[Static]
 		[Export ("authenticationViewController")]
-		[Verify (MethodToProperty)]
 		SPTAuthViewController AuthenticationViewController { get; }
 
 		// +(SPTAuthViewController *)authenticationViewControllerWithAuth:(SPTAuth *)auth;
@@ -376,7 +370,6 @@ namespace Spotify
 		// +(void)setSharedHandler:(id<SPTRequestHandlerProtocol>)handler;
 		[Static]
 		[Export ("sharedHandler")]
-		[Verify (MethodToProperty)]
 		SPTRequestHandlerProtocol SharedHandler { get; set; }
 
 		// +(void)requestItemAtURI:(NSURL *)uri withSession:(SPTSession *)session callback:(SPTRequestCallback)block __attribute__((deprecated("")));
@@ -1673,7 +1666,6 @@ namespace Spotify
 
 		// -(uint32_t)bytesInAudioBuffer;
 		[Export ("bytesInAudioBuffer")]
-		[Verify (MethodToProperty)]
 		uint BytesInAudioBuffer { get; }
 
 		// -(BOOL)connectOutputBus:(UInt32)sourceOutputBusNumber ofNode:(AUNode)sourceNode toInputBus:(UInt32)destinationInputBusNumber ofNode:(AUNode)destinationNode inGraph:(AUGraph)graph error:(NSError **)error;
@@ -1775,7 +1767,6 @@ namespace Spotify
 
 		// -(NSUInteger)size;
 		[Export ("size")]
-		[Verify (MethodToProperty)]
 		nuint Size { get; }
 
 		// @property (readonly, nonatomic) NSUInteger capacity;
