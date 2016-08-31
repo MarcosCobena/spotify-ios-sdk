@@ -521,12 +521,6 @@ namespace Spotify
 		[Export ("albumWithURI:accessToken:market:callback:")]
 		void AlbumWithURI (NSUrl uri, string accessToken, string market, SPTRequestCallback block);
 
-		// +(void)albumsWithURIs:(NSArray *)uris session:(SPTSession *)session callback:(SPTRequestCallback)block __attribute__((deprecated("")));
-		[Static]
-		[Export ("albumsWithURIs:session:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void AlbumsWithURIs (NSObject[] uris, SPTSession session, SPTRequestCallback block);
-
 		// +(void)albumsWithURIs:(NSArray *)uris accessToken:(NSString *)accessToken market:(NSString *)market callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("albumsWithURIs:accessToken:market:callback:")]
