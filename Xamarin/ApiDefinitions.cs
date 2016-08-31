@@ -1482,15 +1482,15 @@ namespace Spotify
 
 		// -(NSUInteger)attemptAppendData:(const void *)data ofLength:(NSUInteger)dataLength;
 		[Export ("attemptAppendData:ofLength:")]
-		unsafe nuint AttemptAppendData (void* data, nuint dataLength);
+		nuint AttemptAppendData (IntPtr data, nuint dataLength);
 
 		// -(NSUInteger)attemptAppendData:(const void *)data ofLength:(NSUInteger)dataLength chunkSize:(NSUInteger)chunkSize;
 		[Export ("attemptAppendData:ofLength:chunkSize:")]
-		unsafe nuint AttemptAppendData (void* data, nuint dataLength, nuint chunkSize);
+		nuint AttemptAppendData (IntPtr data, nuint dataLength, nuint chunkSize);
 
 		// -(NSUInteger)readDataOfLength:(NSUInteger)desiredLength intoAllocatedBuffer:(void **)outBuffer;
 		[Export ("readDataOfLength:intoAllocatedBuffer:")]
-		unsafe nuint ReadDataOfLength (nuint desiredLength, void** outBuffer);
+		nuint ReadDataOfLength (nuint desiredLength, out IntPtr outBuffer);
 
 		// @property (readonly) NSUInteger length;
 		[Export ("length")]
@@ -1521,7 +1521,7 @@ namespace Spotify
 
 		// -(NSInteger)attemptToDeliverAudioFrames:(const void *)audioFrames ofCount:(NSInteger)frameCount streamDescription:(AudioStreamBasicDescription)audioDescription;
 		[Export ("attemptToDeliverAudioFrames:ofCount:streamDescription:")]
-		unsafe nint AttemptToDeliverAudioFrames (void* audioFrames, nint frameCount, AudioStreamBasicDescription audioDescription);
+		nint AttemptToDeliverAudioFrames (IntPtr audioFrames, nint frameCount, AudioStreamBasicDescription audioDescription);
 
 		// -(uint32_t)bytesInAudioBuffer;
 		[Export ("bytesInAudioBuffer")]
@@ -1529,11 +1529,11 @@ namespace Spotify
 
 		// -(BOOL)connectOutputBus:(UInt32)sourceOutputBusNumber ofNode:(AUNode)sourceNode toInputBus:(UInt32)destinationInputBusNumber ofNode:(AUNode)destinationNode inGraph:(AUGraph)graph error:(NSError **)error;
 		[Export ("connectOutputBus:ofNode:toInputBus:ofNode:inGraph:error:")]
-		unsafe bool ConnectOutputBus (uint sourceOutputBusNumber, int sourceNode, uint destinationInputBusNumber, int destinationNode, AUGraph* graph, out NSError error);
+		bool ConnectOutputBus (uint sourceOutputBusNumber, int sourceNode, uint destinationInputBusNumber, int destinationNode, AUGraph graph, out NSError error);
 
 		// -(void)disposeOfCustomNodesInGraph:(AUGraph)graph;
 		[Export ("disposeOfCustomNodesInGraph:")]
-		unsafe void DisposeOfCustomNodesInGraph (AUGraph* graph);
+		void DisposeOfCustomNodesInGraph (AUGraph graph);
 
 		// @property (readwrite, nonatomic) double volume;
 		[Export ("volume")]
