@@ -226,17 +226,17 @@ namespace Spotify
 		// @required -(void)authenticationViewController:(SPTAuthViewController *)authenticationViewController didLoginWithSession:(SPTSession *)session;
 		[Abstract]
 		[Export ("authenticationViewController:didLoginWithSession:")]
-		void AuthenticationViewController (SPTAuthViewController authenticationViewController, SPTSession session);
+		void DidLoginWithSession (SPTAuthViewController authenticationViewController, SPTSession session);
 
 		// @required -(void)authenticationViewController:(SPTAuthViewController *)authenticationViewController didFailToLogin:(NSError *)error;
 		[Abstract]
 		[Export ("authenticationViewController:didFailToLogin:")]
-		void AuthenticationViewController (SPTAuthViewController authenticationViewController, NSError error);
+		void DidFailToLogin (SPTAuthViewController authenticationViewController, NSError error);
 
 		// @required -(void)authenticationViewControllerDidCancelLogin:(SPTAuthViewController *)authenticationViewController;
 		[Abstract]
 		[Export ("authenticationViewControllerDidCancelLogin:")]
-		void AuthenticationViewControllerDidCancelLogin (SPTAuthViewController authenticationViewController);
+		void DidCancelLogin (SPTAuthViewController authenticationViewController);
 	}
 
 	// @interface SPTAuthViewController : UIViewController
@@ -1508,7 +1508,7 @@ namespace Spotify
 	{
 		// @optional -(void)coreAudioController:(SPTCoreAudioController *)controller didOutputAudioOfDuration:(NSTimeInterval)audioDuration;
 		[Export ("coreAudioController:didOutputAudioOfDuration:")]
-		void DidOutputAudioOfDuration (SPTCoreAudioController controller, double audioDuration);
+		void DidOutputAudio (SPTCoreAudioController controller, double audioDuration);
 	}
 
 	// @interface SPTCoreAudioController : NSObject
@@ -1843,31 +1843,31 @@ namespace Spotify
 	{
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didReceiveError:(SpErrorCode)errorCode withName:(NSString *)name;
 		[Export ("audioStreaming:didReceiveError:withName:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, ErrorCode errorCode, string name);
+		void DidReceiveError (SPTAudioStreamingController audioStreaming, ErrorCode errorCode, string name);
 
 		// @optional -(void)audioStreamingDidLogin:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidLogin:")]
-		void AudioStreamingDidLogin (SPTAudioStreamingController audioStreaming);
+		void DidLogin (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidLogout:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidLogout:")]
-		void AudioStreamingDidLogout (SPTAudioStreamingController audioStreaming);
+		void DidLogout (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidEncounterTemporaryConnectionError:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidEncounterTemporaryConnectionError:")]
-		void AudioStreamingDidEncounterTemporaryConnectionError (SPTAudioStreamingController audioStreaming);
+		void DidEncounterTemporaryConnectionError (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didReceiveMessage:(NSString *)message;
 		[Export ("audioStreaming:didReceiveMessage:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, string message);
+		void DidReceiveMessage (SPTAudioStreamingController audioStreaming, string message);
 
 		// @optional -(void)audioStreamingDidDisconnect:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidDisconnect:")]
-		void AudioStreamingDidDisconnect (SPTAudioStreamingController audioStreaming);
+		void DidDisconnect (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidReconnect:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidReconnect:")]
-		void AudioStreamingDidReconnect (SPTAudioStreamingController audioStreaming);
+		void DidReconnect (SPTAudioStreamingController audioStreaming);
 	}
 
 	// @protocol SPTAudioStreamingPlaybackDelegate <NSObject>
@@ -1877,67 +1877,67 @@ namespace Spotify
 	{
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didReceivePlaybackEvent:(SpPlaybackEvent)event withName:(NSString *)name;
 		[Export ("audioStreaming:didReceivePlaybackEvent:withName:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, SpPlaybackEvent @event, string name);
+		void DidReceivePlaybackEvent (SPTAudioStreamingController audioStreaming, PlaybackEvent @event, string name);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePosition:(NSTimeInterval)position;
 		[Export ("audioStreaming:didChangePosition:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, double position);
+		void DidChangePosition (SPTAudioStreamingController audioStreaming, double position);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying;
 		[Export ("audioStreaming:didChangePlaybackStatus:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, bool isPlaying);
+		void DidChangePlaybackStatus (SPTAudioStreamingController audioStreaming, bool isPlaying);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didSeekToPosition:(NSTimeInterval)position;
 		[Export ("audioStreaming:didSeekToPosition:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, double position);
+		void DidSeekToPosition (SPTAudioStreamingController audioStreaming, double position);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeVolume:(SPTVolume)volume;
 		[Export ("audioStreaming:didChangeVolume:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, double volume);
+		void DidChangeValue (SPTAudioStreamingController audioStreaming, double volume);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeShuffleStatus:(BOOL)isShuffled;
 		[Export ("audioStreaming:didChangeShuffleStatus:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, bool isShuffled);
+		void DidChangeShuffleStatus (SPTAudioStreamingController audioStreaming, bool isShuffled);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeRepeatStatus:(BOOL)isRepeated;
 		[Export ("audioStreaming:didChangeRepeatStatus:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, bool isRepeated);
+		void DidChangeRepeatStatus (SPTAudioStreamingController audioStreaming, bool isRepeated);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeMetadata:(SPTPlaybackMetadata *)metadata;
 		[Export ("audioStreaming:didChangeMetadata:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, SPTPlaybackMetadata metadata);
+		void DidChangeMetadata (SPTAudioStreamingController audioStreaming, SPTPlaybackMetadata metadata);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didStartPlayingTrack:(NSString *)trackUri;
 		[Export ("audioStreaming:didStartPlayingTrack:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, string trackUri);
+		void DidStartPlayingTrack (SPTAudioStreamingController audioStreaming, string trackUri);
 
 		// @optional -(void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didStopPlayingTrack:(NSString *)trackUri;
 		[Export ("audioStreaming:didStopPlayingTrack:")]
-		void AudioStreaming (SPTAudioStreamingController audioStreaming, string trackUri);
+		void DidStopPlayingTrack (SPTAudioStreamingController audioStreaming, string trackUri);
 
 		// @optional -(void)audioStreamingDidSkipToNextTrack:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidSkipToNextTrack:")]
-		void AudioStreamingDidSkipToNextTrack (SPTAudioStreamingController audioStreaming);
+		void DidSkipToNextTrack (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidSkipToPreviousTrack:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidSkipToPreviousTrack:")]
-		void AudioStreamingDidSkipToPreviousTrack (SPTAudioStreamingController audioStreaming);
+		void DidSkipToPreviousTrack (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidBecomeActivePlaybackDevice:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidBecomeActivePlaybackDevice:")]
-		void AudioStreamingDidBecomeActivePlaybackDevice (SPTAudioStreamingController audioStreaming);
+		void DidBecomeActivePlaybackDevice (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidBecomeInactivePlaybackDevice:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidBecomeInactivePlaybackDevice:")]
-		void AudioStreamingDidBecomeInactivePlaybackDevice (SPTAudioStreamingController audioStreaming);
+		void DidBecomeInactivePlaybackDevice (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidLosePermissionForPlayback:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidLosePermissionForPlayback:")]
-		void AudioStreamingDidLosePermissionForPlayback (SPTAudioStreamingController audioStreaming);
+		void DidLosePermissionForPlayback (SPTAudioStreamingController audioStreaming);
 
 		// @optional -(void)audioStreamingDidPopQueue:(SPTAudioStreamingController *)audioStreaming;
 		[Export ("audioStreamingDidPopQueue:")]
-		void AudioStreamingDidPopQueue (SPTAudioStreamingController audioStreaming);
+		void DidPopQueue (SPTAudioStreamingController audioStreaming);
 	}
 
 	[Static]
