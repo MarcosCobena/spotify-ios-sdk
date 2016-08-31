@@ -30,6 +30,8 @@ namespace Spotify
 		NSUrl PlayableUri { get; }
 	}
 
+	interface ISPTTrackProvider { }
+
 	[Static]
 	[Verify (ConstantsInterfaceAssociation)]
 	partial interface Constants
@@ -287,6 +289,8 @@ namespace Spotify
 		NSObject DecodedJSONObject { get; }
 	}
 
+	interface ISPTJSONObject { }
+
 	// @interface SPTJSONDecoding : NSObject
 	[BaseType (typeof(NSObject))]
 	interface SPTJSONDecoding
@@ -336,6 +340,8 @@ namespace Spotify
 		[Export ("uri", ArgumentSemantic.Copy)]
 		NSUrl Uri { get; }
 	}
+
+	interface ISPTPartialObject { }
 
 	// typedef void (^SPTRequestCallback)(NSError *, id);
 	delegate void SPTRequestCallback (NSError arg0, NSObject arg1);
@@ -1748,6 +1754,8 @@ namespace Spotify
 		[Export ("writeCacheData:")]
 		bool WriteCacheData (SPTCacheData cacheData);
 	}
+
+	interface ISPTDiskCaching { }
 
 	// @interface SPTDiskCache : NSObject <SPTDiskCaching>
 	[BaseType (typeof(NSObject))]
