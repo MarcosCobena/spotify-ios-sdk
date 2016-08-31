@@ -221,6 +221,7 @@ namespace Spotify
 
 	// @protocol SPTAuthViewDelegate
 	[Protocol, Model]
+	[BaseType (typeof(NSObject))]
 	interface SPTAuthViewDelegate
 	{
 		// @required -(void)authenticationViewController:(SPTAuthViewController *)authenticationViewController didLoginWithSession:(SPTSession *)session;
@@ -347,6 +348,7 @@ namespace Spotify
 
 	// @protocol SPTRequestHandlerProtocol
 	[Protocol, Model]
+	[BaseType (typeof(NSObject))]
 	interface SPTRequestHandlerProtocol
 	{
 		// @required -(void)performRequest:(NSURLRequest *)request callback:(SPTRequestDataCallback)block;
@@ -1335,7 +1337,7 @@ namespace Spotify
 		// +(NSArray *)followingResultFromData:(NSData *)data withResponse:(NSURLResponse *)response error:(NSError **)error;
 		[Static]
 		[Export ("followingResultFromData:withResponse:error:")]
-		bool[] FollowingResultFromData (NSData data, NSUrlResponse response, out NSError error);
+		NSNumber[] FollowingResultFromData (NSData data, NSUrlResponse response, out NSError error);
 	}
 
 	// @interface SPTBrowse : NSObject
@@ -1529,11 +1531,11 @@ namespace Spotify
 
 		// -(BOOL)connectOutputBus:(UInt32)sourceOutputBusNumber ofNode:(AUNode)sourceNode toInputBus:(UInt32)destinationInputBusNumber ofNode:(AUNode)destinationNode inGraph:(AUGraph)graph error:(NSError **)error;
 		[Export ("connectOutputBus:ofNode:toInputBus:ofNode:inGraph:error:")]
-		bool ConnectOutputBus (uint sourceOutputBusNumber, int sourceNode, uint destinationInputBusNumber, int destinationNode, AUGraph graph, out NSError error);
+		bool ConnectOutputBus (uint sourceOutputBusNumber, int sourceNode, uint destinationInputBusNumber, int destinationNode, IntPtr graph, out NSError error);
 
 		// -(void)disposeOfCustomNodesInGraph:(AUGraph)graph;
 		[Export ("disposeOfCustomNodesInGraph:")]
-		void DisposeOfCustomNodesInGraph (AUGraph graph);
+		void DisposeOfCustomNodesInGraph (IntPtr graph);
 
 		// @property (readwrite, nonatomic) double volume;
 		[Export ("volume")]
