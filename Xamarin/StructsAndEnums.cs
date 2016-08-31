@@ -7,7 +7,7 @@ using Spotify;
 namespace Spotify
 {
 	[Native]
-	public enum SPTSearchQueryType : nuint
+	public enum SPTSearchQueryType : ulong
 	{
 		Track = 0,
 		Artist,
@@ -16,7 +16,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SPTAlbumType : nuint
+	public enum SPTAlbumType : ulong
 	{
 		Album,
 		Single,
@@ -25,7 +25,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SPTProduct : nuint
+	public enum SPTProduct : ulong
 	{
 		Free,
 		Unlimited,
@@ -34,7 +34,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SpPlaybackEvent : nuint
+	public enum SpPlaybackEvent : ulong
 	{
 		NotifyPlay,
 		NotifyPause,
@@ -56,7 +56,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SpErrorCode : nuint
+	public enum SpErrorCode : ulong
 	{
 		ErrorOk = 0,
 		ErrorFailed,
@@ -101,7 +101,7 @@ namespace Spotify
 	}
 
 	[Native]
-	public enum SPTBitrate : nuint
+	public enum SPTBitrate : ulong
 	{
 		Low = 0,
 		Normal = 1,
