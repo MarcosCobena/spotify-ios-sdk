@@ -20,8 +20,7 @@ namespace Spotify
 		// @required -(NSArray *)tracksForPlayback;
 		[Abstract]
 		[Export ("tracksForPlayback")]
-		[Verify (MethodToProperty), Verify (StronglyTypedNSArray)]
-		NSObject[] TracksForPlayback { get; }
+		SPTTrack[] TracksForPlayback { get; }
 
 		// @required -(NSURL *)playableUri;
 		[Abstract]
@@ -32,62 +31,67 @@ namespace Spotify
 	interface ISPTTrackProvider { }
 
 	[Static]
-	[Verify (ConstantsInterfaceAssociation)]
-	partial interface Constants
+	interface Scopes
 	{
 		// extern NSString *const SPTAuthStreamingScope;
 		[Field ("SPTAuthStreamingScope", "__Internal")]
-		NSString SPTAuthStreamingScope { get; }
+		NSString Streaming { get; }
 
 		// extern NSString *const SPTAuthPlaylistReadPrivateScope;
 		[Field ("SPTAuthPlaylistReadPrivateScope", "__Internal")]
-		NSString SPTAuthPlaylistReadPrivateScope { get; }
+		NSString PlaylistReadPrivate { get; }
 
 		// extern NSString *const SPTAuthPlaylistModifyPublicScope;
 		[Field ("SPTAuthPlaylistModifyPublicScope", "__Internal")]
-		NSString SPTAuthPlaylistModifyPublicScope { get; }
+		NSString PlaylistModifyPublic { get; }
 
 		// extern NSString *const SPTAuthPlaylistModifyPrivateScope;
 		[Field ("SPTAuthPlaylistModifyPrivateScope", "__Internal")]
-		NSString SPTAuthPlaylistModifyPrivateScope { get; }
+		NSString PlaylistModifyPrivate { get; }
 
 		// extern NSString *const SPTAuthUserFollowModifyScope;
 		[Field ("SPTAuthUserFollowModifyScope", "__Internal")]
-		NSString SPTAuthUserFollowModifyScope { get; }
+		NSString UserFollowModify { get; }
 
 		// extern NSString *const SPTAuthUserFollowReadScope;
 		[Field ("SPTAuthUserFollowReadScope", "__Internal")]
-		NSString SPTAuthUserFollowReadScope { get; }
+		NSString UserFollowRead { get; }
 
 		// extern NSString *const SPTAuthUserLibraryReadScope;
 		[Field ("SPTAuthUserLibraryReadScope", "__Internal")]
-		NSString SPTAuthUserLibraryReadScope { get; }
+		NSString UserLibraryRead { get; }
 
 		// extern NSString *const SPTAuthUserLibraryModifyScope;
 		[Field ("SPTAuthUserLibraryModifyScope", "__Internal")]
-		NSString SPTAuthUserLibraryModifyScope { get; }
+		NSString UserLibraryModify { get; }
 
 		// extern NSString *const SPTAuthUserReadPrivateScope;
 		[Field ("SPTAuthUserReadPrivateScope", "__Internal")]
-		NSString SPTAuthUserReadPrivateScope { get; }
+		NSString UserReadPrivate { get; }
 
 		// extern NSString *const SPTAuthUserReadBirthDateScope;
 		[Field ("SPTAuthUserReadBirthDateScope", "__Internal")]
-		NSString SPTAuthUserReadBirthDateScope { get; }
+		NSString UserReadBirthDate { get; }
 
 		// extern NSString *const SPTAuthUserReadEmailScope;
 		[Field ("SPTAuthUserReadEmailScope", "__Internal")]
-		NSString SPTAuthUserReadEmailScope { get; }
-
-		// extern NSString *const SPTAuthSessionUserDefaultsKey;
-		[Field ("SPTAuthSessionUserDefaultsKey", "__Internal")]
-		NSString SPTAuthSessionUserDefaultsKey { get; }
+		NSString UserReadEmail { get; }
 	}
 
 	// @interface SPTAuth : NSObject
 	[BaseType (typeof(NSObject))]
 	interface SPTAuth
 	{
+		// Binding Note: omitting this for now since there is an instance property
+		// for it below. It's unclear if this is supposed to be a settable static/global
+		// field or not, possibly to serve as a global default value for the property
+		// below if the property is unset. There is no documentation on the field.
+		//
+		// extern NSString *const SPTAuthSessionUserDefaultsKey;
+		// [Static]
+		// [Field ("SPTAuthSessionUserDefaultsKey", "__Internal")]
+		// NSString DefaultSessionUserDefaultsKey { get; }
+
 		// +(SPTAuth *)defaultInstance;
 		[Static]
 		[Export ("defaultInstance")]
@@ -103,8 +107,7 @@ namespace Spotify
 
 		// @property (readwrite, strong) NSArray * requestedScopes;
 		[Export ("requestedScopes", ArgumentSemantic.Strong)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] RequestedScopes { get; set; }
+		NSString[] RequestedScopes { get; set; }
 
 		// @property (readwrite) BOOL allowNativeLogin;
 		[Export ("allowNativeLogin")]
@@ -141,8 +144,7 @@ namespace Spotify
 		// +(NSURL *)loginURLForClientId:(NSString *)clientId withRedirectURL:(NSURL *)redirectURL scopes:(NSArray *)scopes responseType:(NSString *)responseType allowNativeLogin:(BOOL)allowNativeLogin;
 		[Static]
 		[Export ("loginURLForClientId:withRedirectURL:scopes:responseType:allowNativeLogin:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrl LoginURLForClientId (string clientId, NSUrl redirectURL, NSObject[] scopes, string responseType, bool allowNativeLogin);
+		NSUrl LoginURLForClientId (string clientId, NSUrl redirectURL, NSString[] scopes, string responseType, bool allowNativeLogin);
 
 		// -(BOOL)canHandleURL:(NSURL *)callbackURL;
 		[Export ("canHandleURL:")]
@@ -424,8 +426,7 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * covers;
 		[Export ("covers", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Covers { get; }
+		SPTImage[] Covers { get; }
 
 		// @property (readonly, nonatomic) SPTImage * smallestCover;
 		[Export ("smallestCover")]
@@ -441,8 +442,7 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * availableTerritories;
 		[Export ("availableTerritories", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] AvailableTerritories { get; }
+		string[] AvailableTerritories { get; }
 
 		// +(instancetype)partialAlbumFromDecodedJSON:(id)decodedObject error:(NSError **)error;
 		[Static]
@@ -460,8 +460,7 @@ namespace Spotify
 
 		// @property (readonly, nonatomic) NSArray * artists;
 		[Export ("artists")]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Artists { get; }
+		SPTPartialArtist[] Artists { get; }
 
 		// @property (readonly, nonatomic) SPTListPage * firstTrackPage;
 		[Export ("firstTrackPage")]
@@ -477,8 +476,7 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * genres;
 		[Export ("genres", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Genres { get; }
+		string[] Genres { get; }
 
 		// @property (readonly, nonatomic) double popularity;
 		[Export ("popularity")]
@@ -492,8 +490,7 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForAlbums:(NSArray *)uris withAccessToken:(NSString *)accessToken market:(NSString *)market error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForAlbums:withAccessToken:market:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForAlbums (NSObject[] uris, string accessToken, string market, out NSError error);
+		NSUrlRequest CreateRequestForAlbums (NSUrl[] uris, string accessToken, string market, out NSError error);
 
 		// +(instancetype)albumFromData:(NSData *)data withResponse:(NSURLResponse *)response error:(NSError **)error;
 		[Static]
@@ -508,8 +505,7 @@ namespace Spotify
 		// +(NSArray *)albumsFromDecodedJSON:(id)decodedObject error:(NSError **)error;
 		[Static]
 		[Export ("albumsFromDecodedJSON:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] AlbumsFromDecodedJSON (NSObject decodedObject, out NSError error);
+		SPTAlbum[] AlbumsFromDecodedJSON (NSObject decodedObject, out NSError error);
 
 		// +(void)albumWithURI:(NSURL *)uri session:(SPTSession *)session callback:(SPTRequestCallback)block __attribute__((deprecated("")));
 		[Static]
@@ -524,8 +520,7 @@ namespace Spotify
 		// +(void)albumsWithURIs:(NSArray *)uris accessToken:(NSString *)accessToken market:(NSString *)market callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("albumsWithURIs:accessToken:market:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void AlbumsWithURIs (NSObject[] uris, string accessToken, string market, SPTRequestCallback block);
+		void AlbumsWithURIs (NSUrl[] uris, string accessToken, string market, SPTRequestCallback block);
 
 		// +(BOOL)isAlbumURI:(NSURL *)uri;
 		[Static]
@@ -565,13 +560,11 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * genres;
 		[Export ("genres", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Genres { get; }
+		string[] Genres { get; }
 
 		// @property (readonly, copy, nonatomic) NSArray * images;
 		[Export ("images", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Images { get; }
+		SPTImage[] Images { get; }
 
 		// @property (readonly, nonatomic) SPTImage * smallestImage;
 		[Export ("smallestImage")]
@@ -597,8 +590,7 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForArtists:(NSArray *)uris withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForArtists:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForArtists (NSObject[] uris, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForArtists (NSUrl[] uris, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForAlbumsByArtist:(NSURL *)artist ofType:(SPTAlbumType)type withAccessToken:(NSString *)accessToken market:(NSString *)market error:(NSError **)error;
 		[Static]
@@ -628,14 +620,12 @@ namespace Spotify
 		// +(NSArray *)artistsFromData:(NSData *)data withResponse:(NSURLResponse *)response error:(NSError **)error;
 		[Static]
 		[Export ("artistsFromData:withResponse:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] ArtistsFromData (NSData data, NSUrlResponse response, out NSError error);
+		SPTArtist[] ArtistsFromData (NSData data, NSUrlResponse response, out NSError error);
 
 		// +(NSArray *)artistsFromDecodedJSON:(id)decodedObject error:(NSError **)error;
 		[Static]
 		[Export ("artistsFromDecodedJSON:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] ArtistsFromDecodedJSON (NSObject decodedObject, out NSError error);
+		SPTArtist[] ArtistsFromDecodedJSON (NSObject decodedObject, out NSError error);
 
 		// +(void)artistWithURI:(NSURL *)uri session:(SPTSession *)session callback:(SPTRequestCallback)block;
 		[Static]
@@ -650,14 +640,12 @@ namespace Spotify
 		// +(void)artistsWithURIs:(NSArray *)uris session:(SPTSession *)session callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("artistsWithURIs:session:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void ArtistsWithURIs (NSObject[] uris, SPTSession session, SPTRequestCallback block);
+		void ArtistsWithURIs (NSUrl[] uris, SPTSession session, SPTRequestCallback block);
 
 		// +(void)artistsWithURIs:(NSArray *)uris accessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("artistsWithURIs:accessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void ArtistsWithURIs (NSObject[] uris, string accessToken, SPTRequestCallback block);
+		void ArtistsWithURIs (NSUrl[] uris, string accessToken, SPTRequestCallback block);
 
 		// -(void)requestAlbumsOfType:(SPTAlbumType)type withSession:(SPTSession *)session availableInTerritory:(NSString *)territory callback:(SPTRequestCallback)block;
 		[Export ("requestAlbumsOfType:withSession:availableInTerritory:callback:")]
@@ -746,8 +734,7 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * images;
 		[Export ("images", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Images { get; }
+		SPTImage[] Images { get; }
 
 		// @property (readonly, nonatomic) SPTImage * smallestImage;
 		[Export ("smallestImage")]
@@ -789,8 +776,7 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * artists;
 		[Export ("artists", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Artists { get; }
+		SPTArtist[] Artists { get; }
 
 		// @property (readonly, nonatomic) NSInteger discNumber;
 		[Export ("discNumber")]
@@ -810,8 +796,7 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * availableTerritories;
 		[Export ("availableTerritories", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] AvailableTerritories { get; }
+		string[] AvailableTerritories { get; }
 
 		// @property (readonly, copy, nonatomic) NSURL * previewURL;
 		[Export ("previewURL", ArgumentSemantic.Copy)]
@@ -877,8 +862,7 @@ namespace Spotify
 		// +(void)playlistsWithURIs:(NSArray *)uris session:(SPTSession *)session callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("playlistsWithURIs:session:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void PlaylistsWithURIs (NSObject[] uris, SPTSession session, SPTRequestCallback block);
+		void PlaylistsWithURIs (NSUrl[] uris, SPTSession session, SPTRequestCallback block);
 
 		// +(BOOL)isPlaylistURI:(NSURL *)uri;
 		[Static]
@@ -902,28 +886,23 @@ namespace Spotify
 
 		// -(void)addTracksToPlaylist:(NSArray *)tracks withSession:(SPTSession *)session callback:(SPTErrorableOperationCallback)block;
 		[Export ("addTracksToPlaylist:withSession:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void AddTracksToPlaylist (NSObject[] tracks, SPTSession session, SPTErrorableOperationCallback block);
+		void AddTracksToPlaylist (SPTPartialTrack[] tracks, SPTSession session, SPTErrorableOperationCallback block);
 
 		// -(void)addTracksToPlaylist:(NSArray *)tracks withAccessToken:(NSString *)accessToken callback:(SPTErrorableOperationCallback)block;
 		[Export ("addTracksToPlaylist:withAccessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void AddTracksToPlaylist (NSObject[] tracks, string accessToken, SPTErrorableOperationCallback block);
+		void AddTracksToPlaylist (SPTPartialTrack[] tracks, string accessToken, SPTErrorableOperationCallback block);
 
 		// -(void)addTracksWithPositionToPlaylist:(NSArray *)tracks withPosition:(int)position session:(SPTSession *)session callback:(SPTErrorableOperationCallback)block;
 		[Export ("addTracksWithPositionToPlaylist:withPosition:session:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void AddTracksWithPositionToPlaylist (NSObject[] tracks, int position, SPTSession session, SPTErrorableOperationCallback block);
+		void AddTracksWithPositionToPlaylist (SPTPartialTrack[] tracks, int position, SPTSession session, SPTErrorableOperationCallback block);
 
 		// -(void)addTracksWithPositionToPlaylist:(NSArray *)tracks withPosition:(int)position accessToken:(NSString *)accessToken callback:(SPTErrorableOperationCallback)block;
 		[Export ("addTracksWithPositionToPlaylist:withPosition:accessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void AddTracksWithPositionToPlaylist (NSObject[] tracks, int position, string accessToken, SPTErrorableOperationCallback block);
+		void AddTracksWithPositionToPlaylist (SPTPartialTrack[] tracks, int position, string accessToken, SPTErrorableOperationCallback block);
 
 		// -(void)replaceTracksInPlaylist:(NSArray *)tracks withAccessToken:(NSString *)accessToken callback:(SPTErrorableOperationCallback)block;
 		[Export ("replaceTracksInPlaylist:withAccessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void ReplaceTracksInPlaylist (NSObject[] tracks, string accessToken, SPTErrorableOperationCallback block);
+		void ReplaceTracksInPlaylist (SPTPartialTrack[] tracks, string accessToken, SPTErrorableOperationCallback block);
 
 		// -(void)changePlaylistDetails:(NSDictionary *)data withAccessToken:(NSString *)accessToken callback:(SPTErrorableOperationCallback)block;
 		[Export ("changePlaylistDetails:withAccessToken:callback:")]
@@ -931,31 +910,26 @@ namespace Spotify
 
 		// -(void)removeTracksFromPlaylist:(NSArray *)tracks withAccessToken:(NSString *)accessToken callback:(SPTErrorableOperationCallback)block;
 		[Export ("removeTracksFromPlaylist:withAccessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void RemoveTracksFromPlaylist (NSObject[] tracks, string accessToken, SPTErrorableOperationCallback block);
+		void RemoveTracksFromPlaylist (SPTPartialTrack[] tracks, string accessToken, SPTErrorableOperationCallback block);
 
 		// -(void)removeTracksWithPositionsFromPlaylist:(NSArray *)tracks withAccessToken:(NSString *)accessToken callback:(SPTErrorableOperationCallback)block;
 		[Export ("removeTracksWithPositionsFromPlaylist:withAccessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void RemoveTracksWithPositionsFromPlaylist (NSObject[] tracks, string accessToken, SPTErrorableOperationCallback block);
+		void RemoveTracksWithPositionsFromPlaylist (SPTPartialTrack[] tracks, string accessToken, SPTErrorableOperationCallback block);
 
 		// +(NSURLRequest *)createRequestForAddingTracks:(NSArray *)tracks toPlaylist:(NSURL *)playlist withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForAddingTracks:toPlaylist:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForAddingTracks (NSObject[] tracks, NSUrl playlist, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForAddingTracks (SPTPartialTrack[] tracks, NSUrl playlist, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForAddingTracks:(NSArray *)tracks atPosition:(int)position toPlaylist:(NSURL *)playlist withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForAddingTracks:atPosition:toPlaylist:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForAddingTracks (NSObject[] tracks, int position, NSUrl playlist, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForAddingTracks (SPTPartialTrack[] tracks, int position, NSUrl playlist, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForSettingTracks:(NSArray *)tracks inPlaylist:(NSURL *)playlist withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForSettingTracks:inPlaylist:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForSettingTracks (NSObject[] tracks, NSUrl playlist, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForSettingTracks (SPTPartialTrack[] tracks, NSUrl playlist, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForChangingDetails:(NSDictionary *)data inPlaylist:(NSURL *)playlist withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
@@ -965,14 +939,12 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForRemovingTracksWithPositions:(NSArray *)tracks fromPlaylist:(NSURL *)playlist withAccessToken:(NSString *)accessToken snapshot:(NSString *)snapshotId error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForRemovingTracksWithPositions:fromPlaylist:withAccessToken:snapshot:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForRemovingTracksWithPositions (NSObject[] tracks, NSUrl playlist, string accessToken, string snapshotId, out NSError error);
+		NSUrlRequest CreateRequestForRemovingTracksWithPositions (SPTPartialTrack[] tracks, NSUrl playlist, string accessToken, string snapshotId, out NSError error);
 
 		// +(NSURLRequest *)createRequestForRemovingTracks:(NSArray *)tracks fromPlaylist:(NSURL *)playlist withAccessToken:(NSString *)accessToken snapshot:(NSString *)snapshotId error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForRemovingTracks:fromPlaylist:withAccessToken:snapshot:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForRemovingTracks (NSObject[] tracks, NSUrl playlist, string accessToken, string snapshotId, out NSError error);
+		NSUrlRequest CreateRequestForRemovingTracks (SPTPartialTrack[] tracks, NSUrl playlist, string accessToken, string snapshotId, out NSError error);
 
 		// +(NSURLRequest *)createRequestForPlaylistWithURI:(NSURL *)uri accessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
@@ -1024,7 +996,6 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * items;
 		[Export ("items", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
 		NSObject[] Items { get; }
 
 		// -(NSURLRequest *)createRequestForNextPageWithAccessToken:(NSString *)accessToken error:(NSError **)error;
@@ -1139,8 +1110,7 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForTracks:(NSArray *)uris withAccessToken:(NSString *)accessToken market:(NSString *)market error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForTracks:withAccessToken:market:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForTracks (NSObject[] uris, string accessToken, string market, out NSError error);
+		NSUrlRequest CreateRequestForTracks (NSUrl[] uris, string accessToken, string market, out NSError error);
 
 		// +(instancetype)trackFromData:(NSData *)data withResponse:(NSURLResponse *)response error:(NSError **)error;
 		[Static]
@@ -1155,14 +1125,12 @@ namespace Spotify
 		// +(NSArray *)tracksFromData:(NSData *)data withResponse:(NSURLResponse *)response error:(NSError **)error;
 		[Static]
 		[Export ("tracksFromData:withResponse:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] TracksFromData (NSData data, NSUrlResponse response, out NSError error);
+		SPTTrack[] TracksFromData (NSData data, NSUrlResponse response, out NSError error);
 
 		// +(NSArray *)tracksFromDecodedJSON:(id)decodedObject error:(NSError **)error;
 		[Static]
 		[Export ("tracksFromDecodedJSON:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] TracksFromDecodedJSON (NSObject decodedObject, out NSError error);
+		SPTTrack[] TracksFromDecodedJSON (NSObject decodedObject, out NSError error);
 
 		// +(void)trackWithURI:(NSURL *)uri session:(SPTSession *)session callback:(SPTRequestCallback)block;
 		[Static]
@@ -1177,14 +1145,12 @@ namespace Spotify
 		// +(void)tracksWithURIs:(NSArray *)uris session:(SPTSession *)session callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("tracksWithURIs:session:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void TracksWithURIs (NSObject[] uris, SPTSession session, SPTRequestCallback block);
+		void TracksWithURIs (NSUrl[] uris, SPTSession session, SPTRequestCallback block);
 
 		// +(void)tracksWithURIs:(NSArray *)uris accessToken:(NSString *)accessToken market:(NSString *)market callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("tracksWithURIs:accessToken:market:callback:")]
-		[Verify (StronglyTypedNSArray)]
-		void TracksWithURIs (NSObject[] uris, string accessToken, string market, SPTRequestCallback block);
+		void TracksWithURIs (NSUrl[] uris, string accessToken, string market, SPTRequestCallback block);
 
 		// +(BOOL)isTrackURI:(NSURL *)uri;
 		[Static]
@@ -1199,20 +1165,17 @@ namespace Spotify
 		// +(NSArray *)identifiersFromArray:(NSArray *)tracks;
 		[Static]
 		[Export ("identifiersFromArray:")]
-		[Verify (StronglyTypedNSArray), Verify (StronglyTypedNSArray)]
-		NSObject[] IdentifiersFromArray (NSObject[] tracks);
+		string[] IdentifiersFromArray (NSObject[] tracks);
 
 		// +(NSArray *)urisFromArray:(NSArray *)tracks;
 		[Static]
 		[Export ("urisFromArray:")]
-		[Verify (StronglyTypedNSArray), Verify (StronglyTypedNSArray)]
-		NSObject[] UrisFromArray (NSObject[] tracks);
+		NSUrl[] UrisFromArray (NSObject[] tracks);
 
 		// +(NSArray *)uriStringsFromArray:(NSArray *)tracks;
 		[Static]
 		[Export ("uriStringsFromArray:")]
-		[Verify (StronglyTypedNSArray), Verify (StronglyTypedNSArray)]
-		NSObject[] UriStringsFromArray (NSObject[] tracks);
+		string[] UriStringsFromArray (NSObject[] tracks);
 	}
 
 	// @interface SPTPlaylistTrack : SPTTrack <SPTJSONObject>
@@ -1267,8 +1230,7 @@ namespace Spotify
 
 		// @property (readonly, copy, nonatomic) NSArray * images;
 		[Export ("images", ArgumentSemantic.Copy)]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] Images { get; }
+		SPTImage[] Images { get; }
 
 		// @property (readonly, nonatomic) SPTImage * smallestImage;
 		[Export ("smallestImage")]
@@ -1338,38 +1300,32 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForFollowingArtists:(NSArray *)artistUris withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForFollowingArtists:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForFollowingArtists (NSObject[] artistUris, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForFollowingArtists (NSUrl[] artistUris, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForUnfollowingArtists:(NSArray *)artistUris withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForUnfollowingArtists:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForUnfollowingArtists (NSObject[] artistUris, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForUnfollowingArtists (NSUrl[] artistUris, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForCheckingIfFollowingArtists:(NSArray *)artistUris withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForCheckingIfFollowingArtists:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForCheckingIfFollowingArtists (NSObject[] artistUris, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForCheckingIfFollowingArtists (NSUrl[] artistUris, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForFollowingUsers:(NSArray *)usernames withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForFollowingUsers:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForFollowingUsers (NSObject[] usernames, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForFollowingUsers (string[] usernames, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForUnfollowingUsers:(NSArray *)usernames withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForUnfollowingUsers:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForUnfollowingUsers (NSObject[] usernames, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForUnfollowingUsers (string[] usernames, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForCheckingIfFollowingUsers:(NSArray *)username withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForCheckingIfFollowingUsers:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForCheckingIfFollowingUsers (NSObject[] username, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForCheckingIfFollowingUsers (string[] usernames, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForFollowingPlaylist:(NSURL *)playlistUri withAccessToken:(NSString *)accessToken secret:(BOOL)secret error:(NSError **)error;
 		[Static]
@@ -1384,14 +1340,12 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForCheckingIfUsers:(NSArray *)usernames areFollowingPlaylist:(NSURL *)playlistUri withAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForCheckingIfUsers:areFollowingPlaylist:withAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSUrlRequest CreateRequestForCheckingIfUsers (NSObject[] usernames, NSUrl playlistUri, string accessToken, out NSError error);
+		NSUrlRequest CreateRequestForCheckingIfUsers (string[] usernames, NSUrl playlistUri, string accessToken, out NSError error);
 
 		// +(NSArray *)followingResultFromData:(NSData *)data withResponse:(NSURLResponse *)response error:(NSError **)error;
 		[Static]
 		[Export ("followingResultFromData:withResponse:error:")]
-		[Verify (StronglyTypedNSArray)]
-		NSObject[] FollowingResultFromData (NSData data, NSUrlResponse response, out NSError error);
+		bool[] FollowingResultFromData (NSData data, NSUrlResponse response, out NSError error);
 	}
 
 	// @interface SPTBrowse : NSObject
@@ -1436,19 +1390,16 @@ namespace Spotify
 		// +(NSURLRequest *)createRequestForSavingTracks:(NSArray *)tracks forUserWithAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForSavingTracks:forUserWithAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
 		NSUrlRequest CreateRequestForSavingTracks (NSObject[] tracks, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForCheckingIfSavedTracksContains:(NSArray *)tracks forUserWithAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForCheckingIfSavedTracksContains:forUserWithAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
 		NSUrlRequest CreateRequestForCheckingIfSavedTracksContains (NSObject[] tracks, string accessToken, out NSError error);
 
 		// +(NSURLRequest *)createRequestForRemovingTracksFromSaved:(NSArray *)tracks forUserWithAccessToken:(NSString *)accessToken error:(NSError **)error;
 		[Static]
 		[Export ("createRequestForRemovingTracksFromSaved:forUserWithAccessToken:error:")]
-		[Verify (StronglyTypedNSArray)]
 		NSUrlRequest CreateRequestForRemovingTracksFromSaved (NSObject[] tracks, string accessToken, out NSError error);
 
 		// +(void)savedTracksForUserWithAccessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
@@ -1459,19 +1410,16 @@ namespace Spotify
 		// +(void)saveTracks:(NSArray *)tracks forUserWithAccessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("saveTracks:forUserWithAccessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
 		void SaveTracks (NSObject[] tracks, string accessToken, SPTRequestCallback block);
 
 		// +(void)savedTracksContains:(NSArray *)tracks forUserWithAccessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("savedTracksContains:forUserWithAccessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
 		void SavedTracksContains (NSObject[] tracks, string accessToken, SPTRequestCallback block);
 
 		// +(void)removeTracksFromSaved:(NSArray *)tracks forUserWithAccessToken:(NSString *)accessToken callback:(SPTRequestCallback)block;
 		[Static]
 		[Export ("removeTracksFromSaved:forUserWithAccessToken:callback:")]
-		[Verify (StronglyTypedNSArray)]
 		void RemoveTracksFromSaved (NSObject[] tracks, string accessToken, SPTRequestCallback block);
 	}
 
